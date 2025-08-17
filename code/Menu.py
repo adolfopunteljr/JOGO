@@ -2,7 +2,7 @@
 import pygame.image
 from pygame import Rect, Surface
 from pygame.font import Font
-from code.const import WIN_WIDTH, COLOR_ORANGE, MENU_OPTION, COLOR_WHITE
+from code.const import WIN_WIDTH, COLOR_ORANGE, MENU_OPTION, COLOR_WHITE, COLOR_YELLOW
 # -*- coding: utf-8 -*-
 
 
@@ -15,6 +15,7 @@ class Menu:
     def run(self, ):
         pygame.mixer_music.load("./assets/Menu.mp3")
         pygame.mixer_music.play(-1)  # Play the music in a loop
+        selected = 0  # índice da opção selecionada (adicione antes do while True)
         while True:
             self.window.blit(source=self.surf, dest=self.rect)
             self.menu_text(
@@ -29,18 +30,38 @@ class Menu:
                 text_center_pos=(WIN_WIDTH / 2, 140),)
             
             for i in range(len(MENU_OPTION)):
-                self.menu_text(
+                if i == selected:
+                    self.menu_text(
+                text_size=20,
+                text=MENU_OPTION[i],
+                text_color=COLOR_YELLOW,
+                text_center_pos=(WIN_WIDTH / 2, 180 + 25 * i),)
+                else:
+                    self.menu_text(
                     text_size=20,
                     text=MENU_OPTION[i],
                     text_color=COLOR_WHITE,
                     text_center_pos=(WIN_WIDTH / 2, 180 + 25 * i),)
             
-            pygame.display.flip()
             # Check for all events
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     pygame.quit()
                     quit()  # End pygame
+                if event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_DOWN: # Move down in the menu
+                        if selected < len(MENU_OPTION) - 1:
+                            selected += 1
+                        else:
+                            selected = 0
+                    if event.key == pygame.K_UP: # Move up in the menu
+                        if selected > 0:
+                            selected -= 1
+                        else:
+                            selected = len(MENU_OPTION) - 1
+                    if event.key == pygame.K_RETURN:  # Select the option
+                        return selected  # Return the selected option
+            pygame.display.flip()
 
 
     def menu_text(

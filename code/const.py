@@ -13,6 +13,16 @@ COLOR_DARK_GRAY = (64, 64, 64)
 COLOR_CYAN = (0, 255, 255)
 COLOR_MAGENTA = (255, 0, 255)
 
+#E
+ENTITY_SPEED = {
+    'Level1Bg0': 0,  # Speed for Level1Bg0
+    'Level1Bg1': 1,
+    'Level1Bg2': 2,
+    'Level1Bg3': 3,
+    'Level1Bg4': 4,
+    'Level1Bg5': 5,
+    'Level1Bg6': 6,
+}
 
 #M  
     ### Menu options
